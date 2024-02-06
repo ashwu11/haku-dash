@@ -69,6 +69,14 @@ function animate() {
     } else {
         player.velocity.x = 0
     }
+
+    // platform collision detection
+    if (player.position.y + player.height <= platform.position.y && // top
+        player.position.y + player.height + player.velocity.y >= platform.position.y && // bottom
+        player.position.x + player.width >= platform.position.x && // left
+        player.position.x <= platform.position.x + platform.width) { // right
+        player.velocity.y = 0
+    }
 }
 
 function handleKeyDown(event) {
