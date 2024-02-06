@@ -22,6 +22,7 @@ class Player {
 
     update() {
         this.draw()
+        this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
         // floor detection
@@ -34,42 +35,77 @@ class Player {
 }
 
 const player = new Player()
+const keys = {
+    right: {pressed: false}, 
+    left: {pressed: false}
+}
+
 player.draw()
 
 function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
     player.update()
-    //console.log('updating')
+
+    if (keys.left.pressed) {
+        player.velocity.x = -5
+    } else if (keys.right.pressed) {
+        player.velocity.x = 5
+    } else {
+        player.velocity.x = 0
+    }
 }
 
 animate()
+addEventListener('keydown', handleKeyDown)
+addEventListener('keyup', handleKeyUp)
 
-// grab keyCode parameter of event
-addEventListener('keydown', ({ keyCode }) => { 
-    console.log(keyCode)
-    // awsd controls
-    switch (keyCode) {
-        case 65:
+function handleKeyDown(event) {
+    var keyPressed = event.key.toLowerCase()
+
+    switch (keyPressed) {
+        case 'a':
             console.log('left')
-            player.position.x -= player.velocity.x
+            keys.left.pressed = true
             break
         
-        case 87:
-            console.log('up')
+        case 'w':
+            console.log('up') 
             player.velocity.y -= 10
             break
         
-        case 68:
+        case 'd':
             console.log('right')
-            player.position.x += player.velocity.x
+            keys.right.pressed = true
             break
 
-        case 83:
+        case 's':
             console.log('down')
             player.velocity.y += 10
             break
 
-        // 37 - 40 is left arrow key, up, right, down
     }
-})
+    console.log(keys.right.pressed)
+}
+
+function handleKeyUp(event) {
+    var keyPressed = event.key.toLowerCase()
+
+    switch (keyPressed) {
+        case 'a':
+            keys.left.pressed = false
+            break
+        
+        case 'w':
+            break
+        
+        case 'd':
+            keys.right.pressed = false
+            break
+
+        case 's':
+            break
+
+    }
+    console.log(keys.right.pressed)
+}
