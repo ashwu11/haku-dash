@@ -1,12 +1,11 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-console.log(c)
-
 canvas.width = window.innerWidth
 canvas.height = window.innerHeight
-
 const gravity = 0.5
+
+// CLASSES
 class Player {
     constructor() {
         this.position = {x: 100, y: 100}
@@ -34,39 +33,51 @@ class Player {
     }
 }
 
-const player = new Player()
-const keys = {
-    right: {pressed: false}, 
-    left: {pressed: false}
+class Platform {
+    constructor() {
+        this.position = {x: 200, y: 100}
+        this.width = 200
+        this.height = 20
+    }
+
+    draw() {
+        c.fillStyle = 'green'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
 }
 
-player.draw()
+// GAME
+const player = new Player()
+const platform = new Platform()
+const keys = {right: false, left: false}
 
+animate()
+addEventListener('keydown', handleKeyDown)
+addEventListener('keyup', handleKeyUp)
+
+// FUNCTIONS
 function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
     player.update()
+    platform.draw()
 
-    if (keys.left.pressed) {
+    if (keys.left) {
         player.velocity.x = -5
-    } else if (keys.right.pressed) {
+    } else if (keys.right) {
         player.velocity.x = 5
     } else {
         player.velocity.x = 0
     }
 }
 
-animate()
-addEventListener('keydown', handleKeyDown)
-addEventListener('keyup', handleKeyUp)
-
 function handleKeyDown(event) {
-    var keyPressed = event.key.toLowerCase()
+    var key = event.key.toLowerCase()
 
-    switch (keyPressed) {
+    switch (key) {
         case 'a':
             console.log('left')
-            keys.left.pressed = true
+            keys.left = true
             break
         
         case 'w':
@@ -76,7 +87,7 @@ function handleKeyDown(event) {
         
         case 'd':
             console.log('right')
-            keys.right.pressed = true
+            keys.right = true
             break
 
         case 's':
@@ -85,27 +96,27 @@ function handleKeyDown(event) {
             break
 
     }
-    console.log(keys.right.pressed)
+    console.log(keys.right)
 }
 
 function handleKeyUp(event) {
-    var keyPressed = event.key.toLowerCase()
+    var key = event.key.toLowerCase()
 
-    switch (keyPressed) {
+    switch (key) {
         case 'a':
-            keys.left.pressed = false
+            keys.left = false
             break
         
         case 'w':
             break
         
         case 'd':
-            keys.right.pressed = false
+            keys.right = false
             break
 
         case 's':
             break
 
     }
-    console.log(keys.right.pressed)
+    console.log(keys.right)
 }
