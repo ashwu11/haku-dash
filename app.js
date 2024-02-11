@@ -35,7 +35,7 @@ class Player {
 
 class Platform {
     constructor() {
-        this.position = {x: 200, y: 100}
+        this.position = {x: 200, y: 270}
         this.width = 200
         this.height = 20
     }
@@ -50,6 +50,7 @@ class Platform {
 const player = new Player()
 const platform = new Platform()
 const keys = {right: false, left: false}
+const speed = 5
 
 animate()
 addEventListener('keydown', handleKeyDown)
@@ -62,12 +63,14 @@ function animate() {
     player.update()
     platform.draw()
 
-    if (keys.left) {
-        player.velocity.x = -5
-    } else if (keys.right) {
-        player.velocity.x = 5
+    if (keys.left && player.position.x > 50) {
+        player.velocity.x = -speed
+    } else if (keys.right && player.position.x < 450) {
+        player.velocity.x = speed
     } else {
         player.velocity.x = 0
+        if (keys.right) platform.position.x -= speed
+        if (keys.left) platform.position.x += speed
     }
 
     // platform collision detection
@@ -76,6 +79,11 @@ function animate() {
         player.position.x + player.width >= platform.position.x && // left
         player.position.x <= platform.position.x + platform.width) { // right
         player.velocity.y = 0
+    }
+
+    if (player.position.y + player.velocity.y <= 0 ||
+        player.position.y + player.height + player.velocity.y >= canvas.height) {
+            player.velocity.y = 0
     }
 }
 
