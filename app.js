@@ -34,9 +34,9 @@ class Player {
 }
 
 class Platform {
-    constructor() {
-        this.position = {x: 200, y: 270}
-        this.width = 200
+    constructor({x, y}) {
+        this.position = {x, y}
+        this.width = 150
         this.height = 20
     }
 
@@ -48,9 +48,10 @@ class Platform {
 
 // GAME
 const player = new Player()
-const platform = new Platform()
+const platforms = [new Platform({x: 200, y:270}), new Platform({x: 400, y: 180})]
 const keys = {right: false, left: false}
 const speed = 5
+let progress = 0
 
 animate()
 addEventListener('keydown', handleKeyDown)
@@ -61,7 +62,10 @@ function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
     player.update()
-    platform.draw()
+    platforms.forEach((platform) => {
+        platform.draw()
+    })
+    
 
     if (keys.left && player.position.x > 50) {
         player.velocity.x = -speed
@@ -69,22 +73,35 @@ function animate() {
         player.velocity.x = speed
     } else {
         player.velocity.x = 0
-        if (keys.right) platform.position.x -= speed
-        if (keys.left) platform.position.x += speed
+
+        // scroll background
+        if (keys.right) {
+            progress += speed
+            platforms.forEach((platform) => { platform.position.x -= speed })
+        }
+        if (keys.left) {
+            progress -= speed
+            platforms.forEach((platform) => { platform.position.x += speed })
+        }
     }
 
     // platform collision detection
-    if (player.position.y + player.height <= platform.position.y && // top
-        player.position.y + player.height + player.velocity.y >= platform.position.y && // bottom
-        player.position.x + player.width >= platform.position.x && // left
-        player.position.x <= platform.position.x + platform.width) { // right
-        player.velocity.y = 0
-    }
+    platforms.forEach((platform) => {
+        if (player.position.y + player.height <= platform.position.y && // top
+            player.position.y + player.height + player.velocity.y >= platform.position.y && // bottom
+            player.position.x + player.width >= platform.position.x && // left
+            player.position.x <= platform.position.x + platform.width) { // right
+            player.velocity.y = 0
+        }
+    })
 
     if (player.position.y + player.velocity.y <= 0 ||
         player.position.y + player.height + player.velocity.y >= canvas.height) {
             player.velocity.y = 0
     }
+
+    console.log(progress)
+    if (progress > 2000) console.log("Congrats! You win!")
 }
 
 function handleKeyDown(event) {
