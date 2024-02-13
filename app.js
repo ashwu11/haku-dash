@@ -12,7 +12,6 @@ const gravity = 0.6
 const keys = {right: false, left: false}
 const jumpSpeed = 11
 const winPosition = 2000
-const frames = 0
 
 // CLASSES
 class Player {
@@ -21,9 +20,10 @@ class Player {
         this.width = 85
         this.height = 160
         this.velocity = {x: 10, y: 10}
-        this.speed = 8
+        this.speed = 6
         this.image = playerImg
         this.frame = 0;
+        this.counter = 20
     }
 
     draw() {
@@ -33,8 +33,16 @@ class Player {
     }
 
     update() {
-        this.frame++
-        if (this.frame > 7) this.frame = 0
+        // frames
+        if (this.counter > 0){
+            this.counter--
+        } else {
+            this.frame++
+            if (this.frame > 7) this.frame = 0
+            this.counter = 3
+        }
+
+        // speed
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
