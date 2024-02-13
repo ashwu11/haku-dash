@@ -7,7 +7,10 @@ const backgroundImg = document.getElementById('backgroundImage')
 const woodImg = document.getElementById('woodImage')
 const floorImg = document.getElementById('floorImage')
 const nofaceImg = document.getElementById('nofaceImage')
-const gravity = 0.5
+const gravity = 0.6
+const keys = {right: false, left: false}
+const jumpSpeed = 11
+const winPosition = 2000
 
 // CLASSES
 class Player {
@@ -16,6 +19,7 @@ class Player {
         this.width = 50
         this.height = 50
         this.velocity = {x: 10, y: 10}
+        this.speed = 8
     }
 
     draw() {
@@ -61,28 +65,38 @@ class Scenery {
     }
 }
 
-
 // GAME
-const player = new Player()
-const platforms = [
-    new Platform({x: 600, y:400, w: 150, h: 50, img: woodImg}), 
-    new Platform({x: 700, y: 300, w: 150, h: 50, img: woodImg}),
-    new Platform({x: -1, y: 500, w: 500, h: 100, img: floorImg}),
-    new Platform({x: 900, y: 500, w: 500, h: 100, img: floorImg})
-]
-const sceneryObjects = [
-    new Scenery({x: 0, y: 0, w: canvas.width, h: canvas.height, img: backgroundImg}),
-    new Scenery({x: 700, y: 200, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg})
-]
-const keys = {right: false, left: false}
-const speed = 5
 let progress = 0
+let player = new Player()
+let platforms = []
+let sceneryObjects = []
 
+init()
 animate()
 addEventListener('keydown', handleKeyDown)
 addEventListener('keyup', handleKeyUp)
 
 // FUNCTIONS
+function init() {
+    player = new Player()
+    platforms = [ 
+        new Platform({x: -1, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width - 2, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*2 + 200, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*3 + 350, y:400, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*3 + 600, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*4 + 600, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*5 + 500, y:400, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*6 + 500, y: 500, w: 500, h: 100, img: floorImg})
+    ]
+    sceneryObjects = [
+        new Scenery({x: 0, y: 0, w: canvas.width, h: canvas.height, img: backgroundImg}),
+        new Scenery({x: 700, y: 200, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg})
+    ]
+
+    progress = 0    
+}
+
 function animate() {
     requestAnimationFrame(animate)
     c.fillStyle = 'white'
@@ -99,20 +113,20 @@ function animate() {
     
 
     if (keys.left && player.position.x > 50) {
-        player.velocity.x = -speed
+        player.velocity.x = -player.speed
     } else if (keys.right && player.position.x < 450) {
-        player.velocity.x = speed
+        player.velocity.x = player.speed
     } else {
         player.velocity.x = 0
 
         // scroll background
         if (keys.right) {
-            progress += speed
-            platforms.forEach((platform) => { platform.position.x -= speed })
+            progress += player.speed
+            platforms.forEach((platform) => { platform.position.x -= player.speed })
         }
         if (keys.left) {
-            progress -= speed
-            platforms.forEach((platform) => { platform.position.x += speed })
+            progress -= player.speed
+            platforms.forEach((platform) => { platform.position.x += player.speed })
         }
     }
 
@@ -130,12 +144,14 @@ function animate() {
 
     console.log(progress)
     // win condition
-    if (progress > 2000) console.log("Congrats! You win!")
+    if (progress > winPosition) {
+        console.log("Congrats! You win!")
+    }
 
     // lose condition
     if (player.position.y > canvas.height) {
         console.log("You lose...womp womp")
-        // reset game
+        init()
     }
 }
 
@@ -150,7 +166,7 @@ function handleKeyDown(event) {
         
         case 'w':
             console.log('up') 
-            player.velocity.y -= 10
+            player.velocity.y -= jumpSpeed
             break
         
         case 'd':
@@ -160,7 +176,7 @@ function handleKeyDown(event) {
 
         case 's':
             console.log('down')
-            player.velocity.y += 10
+            player.velocity.y += jumpSpeed
             break
 
     }
