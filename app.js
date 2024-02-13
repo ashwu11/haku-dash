@@ -7,27 +7,34 @@ const backgroundImg = document.getElementById('backgroundImage')
 const woodImg = document.getElementById('woodImage')
 const floorImg = document.getElementById('floorImage')
 const nofaceImg = document.getElementById('nofaceImage')
+const playerImg = document.getElementById('chihiroImage')
 const gravity = 0.6
 const keys = {right: false, left: false}
 const jumpSpeed = 11
 const winPosition = 2000
+const frames = 0
 
 // CLASSES
 class Player {
     constructor() {
         this.position = {x: 100, y: 100}
-        this.width = 50
-        this.height = 50
+        this.width = 85
+        this.height = 160
         this.velocity = {x: 10, y: 10}
         this.speed = 8
+        this.image = playerImg
+        this.frame = 0;
     }
 
     draw() {
-        c.fillStyle = 'grey'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.drawImage(this.image, 69.5 * this.frame, 0, 70, 170,
+            this.position.x, this.position.y,
+            this.width, this.height)
     }
 
     update() {
+        this.frame++
+        if (this.frame > 7) this.frame = 0
         this.draw()
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
@@ -124,7 +131,7 @@ function animate() {
             progress += player.speed
             platforms.forEach((platform) => { platform.position.x -= player.speed })
         }
-        if (keys.left) {
+        if (keys.left && progress > 0) {
             progress -= player.speed
             platforms.forEach((platform) => { platform.position.x += player.speed })
         }
