@@ -1,8 +1,12 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
-
 canvas.width = 1024
 canvas.height = 576
+
+const backgroundImg = document.getElementById('backgroundImage')
+const woodImg = document.getElementById('woodImage')
+const floorImg = document.getElementById('floorImage')
+const nofaceImg = document.getElementById('nofaceImage')
 const gravity = 0.5
 
 // CLASSES
@@ -24,31 +28,52 @@ class Player {
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
 
-        // floor detection
+        // gravity
         if (this.position.y + this.height <= canvas.height - this.velocity.y) {
             this.velocity.y += gravity
-        } else {
-            this.velocity.y = 0
         }
     }
 }
 
 class Platform {
-    constructor({x, y}) {
-        this.image = document.getElementById('woodImage');
+    constructor({x, y, w, h, img}) {
+        this.image = img
         this.position = {x, y}
-        this.width = 150
-        this.height = 50
+        this.width = w
+        this.height = h
     }
 
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
     }
 }
 
+class Scenery {
+    constructor({x, y, w, h, img}) {
+        this.image = img
+        this.position = {x, y}
+        this.width = w
+        this.height = h
+    }
+
+    draw() {
+        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+
 // GAME
 const player = new Player()
-const platforms = [new Platform({x: 200, y:270}), new Platform({x: 400, y: 180})]
+const platforms = [
+    new Platform({x: 600, y:400, w: 150, h: 50, img: woodImg}), 
+    new Platform({x: 700, y: 300, w: 150, h: 50, img: woodImg}),
+    new Platform({x: -1, y: 500, w: 500, h: 100, img: floorImg}),
+    new Platform({x: 900, y: 500, w: 500, h: 100, img: floorImg})
+]
+const sceneryObjects = [
+    new Scenery({x: 0, y: 0, w: canvas.width, h: canvas.height, img: backgroundImg}),
+    new Scenery({x: 700, y: 200, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg})
+]
 const keys = {right: false, left: false}
 const speed = 5
 let progress = 0
@@ -62,6 +87,11 @@ function animate() {
     requestAnimationFrame(animate)
     c.fillStyle = 'white'
     c.fillRect(0, 0, canvas.width, canvas.height)
+
+    sceneryObjects.forEach((sceneryObject) => {
+        sceneryObject.draw()
+    })
+    
     platforms.forEach((platform) => {
         platform.draw()
     })
@@ -98,13 +128,15 @@ function animate() {
         }
     })
 
-    if (player.position.y + player.velocity.y <= 0 ||
-        player.position.y + player.height + player.velocity.y >= canvas.height) {
-            player.velocity.y = 0
-    }
-
     console.log(progress)
+    // win condition
     if (progress > 2000) console.log("Congrats! You win!")
+
+    // lose condition
+    if (player.position.y > canvas.height) {
+        console.log("You lose...womp womp")
+        // reset game
+    }
 }
 
 function handleKeyDown(event) {
