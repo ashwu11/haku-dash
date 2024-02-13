@@ -1,8 +1,8 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 1024
+canvas.height = 576
 const gravity = 0.5
 
 // CLASSES
@@ -35,14 +35,14 @@ class Player {
 
 class Platform {
     constructor({x, y}) {
+        this.image = document.getElementById('woodImage');
         this.position = {x, y}
         this.width = 150
-        this.height = 20
+        this.height = 50
     }
 
     draw() {
-        c.fillStyle = 'green'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
 
@@ -60,11 +60,12 @@ addEventListener('keyup', handleKeyUp)
 // FUNCTIONS
 function animate() {
     requestAnimationFrame(animate)
-    c.clearRect(0, 0, canvas.width, canvas.height)
-    player.update()
+    c.fillStyle = 'white'
+    c.fillRect(0, 0, canvas.width, canvas.height)
     platforms.forEach((platform) => {
         platform.draw()
     })
+    player.update()
     
 
     if (keys.left && player.position.x > 50) {
@@ -87,10 +88,12 @@ function animate() {
 
     // platform collision detection
     platforms.forEach((platform) => {
-        if (player.position.y + player.height <= platform.position.y && // top
-            player.position.y + player.height + player.velocity.y >= platform.position.y && // bottom
-            player.position.x + player.width >= platform.position.x && // left
-            player.position.x <= platform.position.x + platform.width) { // right
+        let positionY = platform.position.y + 8;
+        let positionX = platform.position.x - 2;
+        if (player.position.y + player.height <= positionY && // top
+            player.position.y + player.height + player.velocity.y >= positionY && // bottom
+            player.position.x + player.width >= positionX && // left
+            player.position.x <= positionX + platform.width) { // right
             player.velocity.y = 0
         }
     })
