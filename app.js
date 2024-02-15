@@ -1,14 +1,14 @@
-const canvas = document.querySelector('canvas')
-const c = canvas.getContext('2d')
-canvas.width = 1024
-canvas.height = 576
+import Platform from "./classes/Platform.js"
+import Player from "./classes/Player.js"
+import Scenery from "./classes/Scenery.js"
+import Obstacle from "./classes/Obstacle.js"
 
-const audio = document.getElementById('mainAudio');
-const walkSound = document.getElementById('walkingAudio');
-const jumpSound = document.getElementById('jumpAudio');
-const windSound = document.getElementById('windAudio');
-const thumpSound = document.getElementById('thumpAudio');
-const tadaSound = document.getElementById('tadaAudio');
+const audio = document.getElementById('mainAudio')
+const walkSound = document.getElementById('walkingAudio')
+const jumpSound = document.getElementById('jumpAudio')
+const windSound = document.getElementById('windAudio')
+const thumpSound = document.getElementById('thumpAudio')
+const tadaSound = document.getElementById('tadaAudio')
 
 const backgroundImg = document.getElementById('backgroundImage')
 const woodImg = document.getElementById('woodImage')
@@ -17,96 +17,19 @@ const nofaceImg = document.getElementById('nofaceImage')
 const playerImg = document.getElementById('chihiroImage')
 const endingImg = document.getElementById('hakuImage')
 const sootRockImg = document.getElementById('sootRockImage')
-const message = document.getElementById("message");
+const message = document.getElementById("message")
 
-// CLASSES
-class Player {
-    constructor() {
-        this.position = {x: 100, y: 100}
-        this.width = 85
-        this.height = 160
-        this.velocity = {x: 10, y: 10}
-        this.speed = 8
-        this.image = playerImg
-        this.frame = 0;
-        this.counter = 20
-    }
-
-    draw() {
-        c.drawImage(this.image, 69.5 * this.frame, 0, 70, 170,
-            this.position.x, this.position.y,
-            this.width, this.height)
-    }
-
-    update() {
-        // frames
-        if (this.counter > 0){
-            this.counter--
-        } else {
-            this.frame++
-            if (this.frame > 7) this.frame = 0
-            this.counter = 3
-        }
-
-        // speed
-        this.draw()
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
-
-        // gravity
-        if (this.position.y + this.height <= canvas.height - this.velocity.y) {
-            this.velocity.y += gravity
-        }
-    }
-}
-
-class Platform {
-    constructor({x, y, w, h, img}) {
-        this.image = img
-        this.position = {x, y}
-        this.width = w
-        this.height = h
-    }
-
-    draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
-class Scenery {
-    constructor({x, y, w, h, img}) {
-        this.image = img
-        this.position = {x, y}
-        this.width = w
-        this.height = h
-    }
-
-    draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
-class Obstacle {
-    constructor({x, y, w, h, img}) {
-        this.image = img
-        this.position = {x, y}
-        this.width = w
-        this.height = h
-    }
-
-    draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
-// GAME
+const canvas = document.querySelector('canvas')
+const c = canvas.getContext('2d')
+canvas.width = 1024
+canvas.height = 576
 const winPosition = 5000
 const gravity = 0.6
-const keys = {right: false, left: false}
 const jumpSpeed = 11
+const keys = {right: false, left: false}
 
 let progress = 0
-let player = new Player()
+let player = new Player(gravity, playerImg, keys)
 let platforms = []
 let sceneryObjects = []
 let obstacles = []
@@ -123,11 +46,12 @@ addEventListener('keydown', handleKeyDown)
 addEventListener('keyup', handleKeyUp)
 
 // FUNCTIONS
+// initialize a new game
 function init() {
     audio.play()
     walkSound.play()
     progress = 0 
-    player = new Player()
+    player = new Player(gravity, playerImg, keys)
     platforms = [ 
         new Platform({x: -1, y: 500, w: 500, h: 100, img: floorImg}),
         new Platform({x: floorImg.width - 2, y: 500, w: 500, h: 100, img: floorImg}),
@@ -156,23 +80,16 @@ function init() {
     ]
 }
 
+// handle game animation
 function animate() {
     requestAnimationFrame(animate)
     c.fillStyle = 'white'
     c.fillRect(0, 0, canvas.width, canvas.height)
 
-    sceneryObjects.forEach((sceneryObject) => {
-        sceneryObject.draw()
-    })
-    
-    platforms.forEach((platform) => {
-        platform.draw()
-    })
-
-    obstacles.forEach((obstacle) => {
-        obstacle.draw()
-    })
-
+    // draw all elements
+    sceneryObjects.forEach((sceneryObject) => { sceneryObject.draw() })
+    platforms.forEach((platform) => { platform.draw() })
+    obstacles.forEach((obstacle) => { obstacle.draw() })
     player.update()
     
     // player movement
@@ -198,12 +115,10 @@ function animate() {
 
     // platform collision detection
     platforms.forEach((platform) => {
-        let positionY = platform.position.y + 8;
-        let positionX = platform.position.x - 2;
-        if (player.position.y + player.height <= positionY && // top
-            player.position.y + player.height + player.velocity.y >= positionY && // bottom
-            player.position.x + player.width >= positionX && // left
-            player.position.x <= positionX + platform.width) { // right
+        if (player.position.y + player.height <= platform.position.y + 8 && // top
+            player.position.y + player.height + player.velocity.y >= platform.position.y + 8 && // bottom
+            player.position.x + player.width - 14 >= platform.position.x && // left
+            player.position.x + 14 <= platform.position.x + platform.width) { // right
             player.velocity.y = 0
         }
     })
@@ -242,9 +157,9 @@ function animate() {
     })
 }
 
+// handle key events
 function handleKeyDown(event) {
     var key = event.key.toLowerCase()
-
     switch (key) {
         case 'a':
             console.log('left')
@@ -267,9 +182,7 @@ function handleKeyDown(event) {
         case 's':
             console.log('down')
             break
-
     }
-    console.log(keys.right)
 }
 
 function handleKeyUp(event) {
