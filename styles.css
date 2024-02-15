@@ -9,11 +9,23 @@ body {
 }
 
 h1 {
-    padding-top: 10px;
     color: beige;
 }
 
 #message {
     color: beige;
     font-size: 18px;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.line {
+    font-size: 50px;
+    height: 1px;
+    background-color: beige;
+    margin: 0 25px;
 }

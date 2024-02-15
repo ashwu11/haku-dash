@@ -3,6 +3,13 @@ const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
 
+const audio = document.getElementById('mainAudio');
+const walkSound = document.getElementById('walkingAudio');
+const jumpSound = document.getElementById('jumpAudio');
+const windSound = document.getElementById('windAudio');
+const thumpSound = document.getElementById('thumpAudio');
+const tadaSound = document.getElementById('tadaAudio');
+
 const backgroundImg = document.getElementById('backgroundImage')
 const woodImg = document.getElementById('woodImage')
 const floorImg = document.getElementById('floorImage')
@@ -11,10 +18,6 @@ const playerImg = document.getElementById('chihiroImage')
 const endingImg = document.getElementById('hakuImage')
 const sootRockImg = document.getElementById('sootRockImage')
 const message = document.getElementById("message");
-const winPosition = 5000
-const gravity = 0.6
-const keys = {right: false, left: false}
-const jumpSpeed = 11
 
 // CLASSES
 class Player {
@@ -97,11 +100,22 @@ class Obstacle {
 }
 
 // GAME
+const winPosition = 5000
+const gravity = 0.6
+const keys = {right: false, left: false}
+const jumpSpeed = 11
+
 let progress = 0
 let player = new Player()
 let platforms = []
 let sceneryObjects = []
 let obstacles = []
+
+jumpSound.volume = 0.3
+walkSound.volume = 0.6
+windSound.volume = 0.3
+thumpSound.volume = 0.3
+tadaSound.volume = 0.1
 
 init()
 animate()
@@ -110,6 +124,8 @@ addEventListener('keyup', handleKeyUp)
 
 // FUNCTIONS
 function init() {
+    audio.play()
+    walkSound.play()
     progress = 0 
     player = new Player()
     platforms = [ 
@@ -196,19 +212,21 @@ function animate() {
 
     // message changes
     if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits!'
-    if (progress >= 2500) message.innerHTML = 'the soot sprites are friendly...'
-    if (progress >= 3000) message.innerHTML = 'unlike No Face :/'
-    if (progress >= 3500) message.innerHTML = 'nice, we are almost there :]'
+    if (progress >= 2500) message.innerHTML = 'Soot sprites are friendly...'
+    if (progress >= 3000) message.innerHTML = 'but beware of No Face!'
+    if (progress >= 3500) message.innerHTML = 'Nice, we are almost there :]'
 
     // win condition
     if (progress >= winPosition) {
-        message.innerHTML = 'Congrats! We found Haku!'
+        message.innerHTML = 'Yay, we found Haku!'
         console.log("You win!")
+        tadaSound.play()
     } 
 
     // lose condition
     if (player.position.y > canvas.height) {
         console.log("You lose... womp womp")
+        windSound.play()
         init()
     }
 
@@ -218,6 +236,7 @@ function animate() {
             player.position.x + player.width <= obstacle.position.x + obstacle.width &&
             player.position.y + player.height >= obstacle.position.y) {
             console.log("You lose... womp womp")
+            thumpSound.play()
             init()
         }
     })
@@ -233,8 +252,9 @@ function handleKeyDown(event) {
             break
         
         case 'w':
-            console.log('up') 
+            console.log('up')
             player.velocity.y -= jumpSpeed
+            jumpSound.play()
             break
         
         case 'd':
