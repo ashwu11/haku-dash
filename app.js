@@ -10,10 +10,11 @@ const nofaceImg = document.getElementById('nofaceImage')
 const playerImg = document.getElementById('chihiroImage')
 const endingImg = document.getElementById('hakuImage')
 const sootRockImg = document.getElementById('sootRockImage')
+const message = document.getElementById("message");
+const winPosition = 5000
 const gravity = 0.6
 const keys = {right: false, left: false}
 const jumpSpeed = 11
-const winPosition = 5000
 
 // CLASSES
 class Player {
@@ -22,7 +23,7 @@ class Player {
         this.width = 85
         this.height = 160
         this.velocity = {x: 10, y: 10}
-        this.speed = 10
+        this.speed = 8
         this.image = playerImg
         this.frame = 0;
         this.counter = 20
@@ -113,7 +114,6 @@ function init() {
     player = new Player()
     platforms = [ 
         new Platform({x: -1, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: 300, y: 425, w: 75, h: 75, img: sootRockImg}),
         new Platform({x: floorImg.width - 2, y: 500, w: 500, h: 100, img: floorImg}),
         new Platform({x: floorImg.width*2 + 200, y: 500, w: 500, h: 100, img: floorImg}),
         new Platform({x: floorImg.width*3 + 350, y: 400, w: 150, h: 50, img: woodImg}),
@@ -125,18 +125,19 @@ function init() {
         new Platform({x: floorImg.width*6 + 500, y: 425, w: 75, h: 75, img: sootRockImg}),
         new Platform({x: floorImg.width*7 + 500, y: 500, w: 500, h: 100, img: floorImg}),
         new Platform({x: floorImg.width*8 + 400, y: 425, w: 75, h: 75, img: sootRockImg}),
-        new Platform({x: floorImg.width*8 + 900, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*9 + 900, y: 500, w: 500, h: 100, img: floorImg})
+        new Platform({x: floorImg.width*8 + 800, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*9 + 800, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*10 + 500, y: 500, w: 500, h: 100, img: floorImg})
     ]
     sceneryObjects = [
         new Scenery({x: 0, y: 0, w: canvas.width, h: canvas.height, img: backgroundImg}),
-        new Scenery({x: 700, y: 200, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg})
+        new Scenery({x: 700, y: 200, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
+        new Scenery({x: 820, y: 270, w: 75, h: 75, img: sootRockImg}),
     ]
     obstacles = [
-        new Obstacle({x: 500, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
         new Obstacle({x: floorImg.width*6 + 700, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
-        new Obstacle({x: winPosition + 500, y: 200, w: 225, h: 300, img: endingImg})
-    ]   
+        new Obstacle({x: winPosition + 600, y: 210, w: 230, h: 300, img: endingImg})
+    ]
 }
 
 function animate() {
@@ -192,10 +193,18 @@ function animate() {
     })
 
     console.log(progress)
+
+    // message changes
+    if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits!'
+    if (progress >= 2500) message.innerHTML = 'the soot sprites are friendly...'
+    if (progress >= 3000) message.innerHTML = 'unlike No Face :/'
+    if (progress >= 3500) message.innerHTML = 'nice, we are almost there :]'
+
     // win condition
     if (progress >= winPosition) {
-        console.log("Congrats! You win!")
-    }
+        message.innerHTML = 'Congrats! We found Haku!'
+        console.log("You win!")
+    } 
 
     // lose condition
     if (player.position.y > canvas.height) {

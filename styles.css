@@ -1,8 +1,19 @@
 body {
-    margin: 0;
+    margin: 10;
     background-color: black;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+}
+
+h1 {
+    padding-top: 10px;
+    color: beige;
+}
+
+#message {
+    color: beige;
+    font-size: 18px;
 }
