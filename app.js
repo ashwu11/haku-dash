@@ -253,8 +253,10 @@ function handleKeyDown(event) {
         
         case 'w':
             console.log('up')
-            player.velocity.y -= jumpSpeed
-            jumpSound.play()
+            if (player.velocity.y == 0) {
+                player.velocity.y -= jumpSpeed
+                jumpSound.play()
+            }
             break
         
         case 'd':
@@ -264,7 +266,6 @@ function handleKeyDown(event) {
 
         case 's':
             console.log('down')
-            player.velocity.y += jumpSpeed
             break
 
     }
