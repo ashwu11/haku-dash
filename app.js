@@ -23,7 +23,7 @@ const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
-const winPosition = 5000
+const winPosition = 6500
 const gravity = 0.6
 const jumpSpeed = 11
 const keys = {right: false, left: false}
@@ -34,6 +34,7 @@ let platforms = []
 let sceneryObjects = []
 let obstacles = []
 
+audio.volume = 0.3
 jumpSound.volume = 0.3
 walkSound.volume = 0.6
 windSound.volume = 0.3
@@ -50,24 +51,36 @@ addEventListener('keyup', handleKeyUp)
 function init() {
     audio.play()
     walkSound.play()
-    progress = 0 
+    progress = 0
     player = new Player(gravity, playerImg, keys)
     platforms = [ 
         new Platform({x: -1, y: 500, w: 500, h: 100, img: floorImg}),
         new Platform({x: floorImg.width - 2, y: 500, w: 500, h: 100, img: floorImg}),
+        // death pits
         new Platform({x: floorImg.width*2 + 200, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*3 + 350, y: 400, w: 150, h: 50, img: woodImg}),
-        new Platform({x: floorImg.width*3 + 600, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*4 + 500, y: 400, w: 150, h: 50, img: woodImg}),
-        new Platform({x: floorImg.width*4 + 700, y: 300, w: 150, h: 50, img: woodImg}),
-        new Platform({x: floorImg.width*5 + 500, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*6 + 500, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*6 + 500, y: 425, w: 75, h: 75, img: sootRockImg}),
-        new Platform({x: floorImg.width*7 + 500, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*8 + 400, y: 425, w: 75, h: 75, img: sootRockImg}),
-        new Platform({x: floorImg.width*8 + 800, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*9 + 800, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*10 + 500, y: 500, w: 500, h: 100, img: floorImg})
+        new Platform({x: floorImg.width*3 + 325, y: 420, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*4 + 100, y: 500, w: 500, h: 100, img: floorImg}),
+        // floating wood
+        new Platform({x: floorImg.width*5 + 120, y: 400, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*5 + 310, y: 300, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*5 + 500, y: 400, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*6 + 200, y: 500, w: 500, h: 100, img: floorImg}),
+        // soots and No Face
+        new Platform({x: floorImg.width*7 + 200, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*7 + 300, y: 425, w: 75, h: 75, img: sootRockImg}),
+        new Platform({x: floorImg.width*8 + 200, y: 500, w: 500, h: 100, img: floorImg}),
+        // balance on logs
+        new Platform({x: floorImg.width*9 + 400, y: 500, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*10 + 100, y: 500, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*10 + 400, y: 500, w: 500, h: 100, img: floorImg}),
+        // final puzzle
+        new Platform({x: floorImg.width*11 + 300, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*11 + 350, y: 425, w: 75, h: 75, img: sootRockImg}),
+        new Platform({x: floorImg.width*11 + 500, y: 325, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*12 + 100, y: 500, w: 500, h: 100, img: floorImg}),
+        new Platform({x: floorImg.width*13 + 100, y: 500, w: 500, h: 100, img: floorImg}),
+        // win platform
+        new Platform({x: floorImg.width*14 + 150, y: 430, w: 150, h: 50, img: woodImg})
     ]
     sceneryObjects = [
         new Scenery({x: 0, y: 0, w: canvas.width, h: canvas.height, img: backgroundImg}),
@@ -75,8 +88,9 @@ function init() {
         new Scenery({x: 820, y: 270, w: 75, h: 75, img: sootRockImg}),
     ]
     obstacles = [
-        new Obstacle({x: floorImg.width*6 + 700, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
-        new Obstacle({x: winPosition + 600, y: 210, w: 230, h: 300, img: endingImg})
+        new Obstacle({x: floorImg.width*8, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
+        new Obstacle({x: floorImg.width*12 + 250, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
+        new Obstacle({x: winPosition + 800, y: 180, w: 230, h: 300, img: endingImg})
     ]
 }
 
@@ -115,8 +129,8 @@ function animate() {
 
     // platform collision detection
     platforms.forEach((platform) => {
-        if (player.position.y + player.height <= platform.position.y + 8 && // top
-            player.position.y + player.height + player.velocity.y >= platform.position.y + 8 && // bottom
+        if (player.position.y + player.height <= platform.position.y + 10 && // top
+            player.position.y + player.height + player.velocity.y >= platform.position.y + 10 && // bottom
             player.position.x + player.width - 14 >= platform.position.x && // left
             player.position.x + 14 <= platform.position.x + platform.width) { // right
             player.velocity.y = 0
@@ -126,10 +140,13 @@ function animate() {
     console.log(progress)
 
     // message changes
+    if (progress >= 50) message.innerHTML = 'Help Chihiro find Haku!'
     if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits!'
-    if (progress >= 2500) message.innerHTML = 'Soot sprites are friendly...'
-    if (progress >= 3000) message.innerHTML = 'but beware of No Face!'
-    if (progress >= 3500) message.innerHTML = 'Nice, we are almost there :]'
+    if (progress >= 2800) message.innerHTML = 'Soot sprites are friendly...'
+    if (progress >= 3200) message.innerHTML = 'but beware of No Face!'
+    if (progress >= 3650) message.innerHTML = 'Phew, that was close'
+    if (progress >= 4000) message.innerHTML = 'we are almost there :]'
+    if (progress >= 5300) message.innerHTML = 'one more puzzle for you...'
 
     // win condition
     if (progress >= winPosition) {
@@ -141,6 +158,7 @@ function animate() {
     // lose condition
     if (player.position.y > canvas.height) {
         console.log("You lose... womp womp")
+        message.innerHTML = 'ahhh... try again :]'
         windSound.play()
         init()
     }
@@ -151,6 +169,7 @@ function animate() {
             player.position.x + player.width <= obstacle.position.x + obstacle.width &&
             player.position.y + player.height >= obstacle.position.y) {
             console.log("You lose... womp womp")
+            message.innerHTML = 'ouch... try again :]'
             thumpSound.play()
             init()
         }
