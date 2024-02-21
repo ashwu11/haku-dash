@@ -23,7 +23,7 @@ const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
-const winPosition = 6500
+const winPosition = 6600
 const gravity = 0.6
 const jumpSpeed = 11
 const keys = {right: false, left: false}
@@ -67,15 +67,15 @@ function init() {
         new Platform({x: floorImg.width*6 + 200, y: 500, w: 500, h: 100, img: floorImg}),
         // soots and No Face
         new Platform({x: floorImg.width*7 + 200, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*7 + 300, y: 425, w: 75, h: 75, img: sootRockImg}),
+        new Platform({x: floorImg.width*7 + 300, y: 425, w: 55, h: 75, img: sootRockImg}),
         new Platform({x: floorImg.width*8 + 200, y: 500, w: 500, h: 100, img: floorImg}),
         // balance on logs
-        new Platform({x: floorImg.width*9 + 400, y: 500, w: 150, h: 50, img: woodImg}),
+        new Platform({x: floorImg.width*9 + 370, y: 500, w: 150, h: 50, img: woodImg}),
         new Platform({x: floorImg.width*10 + 100, y: 500, w: 150, h: 50, img: woodImg}),
         new Platform({x: floorImg.width*10 + 400, y: 500, w: 500, h: 100, img: floorImg}),
         // final puzzle
         new Platform({x: floorImg.width*11 + 300, y: 500, w: 500, h: 100, img: floorImg}),
-        new Platform({x: floorImg.width*11 + 350, y: 425, w: 75, h: 75, img: sootRockImg}),
+        new Platform({x: floorImg.width*11 + 350, y: 425, w: 55, h: 75, img: sootRockImg}),
         new Platform({x: floorImg.width*11 + 500, y: 325, w: 150, h: 50, img: woodImg}),
         new Platform({x: floorImg.width*12 + 100, y: 500, w: 500, h: 100, img: floorImg}),
         new Platform({x: floorImg.width*13 + 100, y: 500, w: 500, h: 100, img: floorImg}),
@@ -85,12 +85,12 @@ function init() {
     sceneryObjects = [
         new Scenery({x: 0, y: 0, w: canvas.width, h: canvas.height, img: backgroundImg}),
         new Scenery({x: 700, y: 200, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
-        new Scenery({x: 820, y: 270, w: 75, h: 75, img: sootRockImg}),
+        new Scenery({x: 820, y: 270, w: 55, h: 75, img: sootRockImg}),
     ]
     obstacles = [
         new Obstacle({x: floorImg.width*8, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
         new Obstacle({x: floorImg.width*12 + 250, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
-        new Obstacle({x: winPosition + 800, y: 180, w: 230, h: 300, img: endingImg})
+        new Obstacle({x: winPosition + 700, y: 180, w: 230, h: 300, img: endingImg})
     ]
 }
 
@@ -149,7 +149,7 @@ function animate() {
     if (progress >= 5300) message.innerHTML = 'one more puzzle for you...'
 
     // win condition
-    if (progress >= winPosition) {
+    if (progress > winPosition) {
         message.innerHTML = 'Yay, we found Haku!'
         console.log("You win!")
         tadaSound.play()
@@ -165,9 +165,9 @@ function animate() {
 
     // obstacle collision detection
     obstacles.forEach((obstacle) => {
-        if (player.position.x + player.width/2 >= obstacle.position.x &&
-            player.position.x + player.width <= obstacle.position.x + obstacle.width &&
-            player.position.y + player.height >= obstacle.position.y) {
+        if (player.position.x + player.width - 35 >= obstacle.position.x &&
+            player.position.x + 35 <= obstacle.position.x + obstacle.width &&
+            player.position.y + player.height - 35 >= obstacle.position.y) {
             console.log("You lose... womp womp")
             message.innerHTML = 'ouch... try again :]'
             thumpSound.play()
