@@ -1,5 +1,5 @@
 body {
-    margin: 10;
+    margin: 30px;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -28,4 +28,62 @@ h1 {
     height: 1px;
     background-color: beige;
     margin: 0 25px;
+}
+
+#myCanvas {
+    border-radius: 20px;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+    width: 280px;
+    margin-top: 30px;
+}
+  
+.card svg {
+    position: relative;
+    display: flex;
+    width: 15%;
+    height: 70%;
+    opacity: 1;
+    transition: opacity 0.25s;
+    z-index: 2;
+    padding: 0.25rem;
+    cursor: pointer;
+}
+  
+.card .github {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
+    color: whitesmoke;
+    transition: 0.25s;
+    border-radius: 70px;
+}
+  
+.card svg {
+    transform: scale(1);
+}
+  
+.card .github:hover {
+    background-color: #1b2025;
+    animation: bounce_613 0.4s linear;
+}
+
+@keyframes bounce_613 {
+    40% {
+      transform: scale(1.2);
+    }
+  
+    70% {
+      transform: scale(0.8);
+    }
+  
+    100% {
+      transform: scale(1);
+    }
 }
