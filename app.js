@@ -18,6 +18,7 @@ const playerImg = document.getElementById('chihiroImage')
 const endingImg = document.getElementById('hakuImage')
 const sootRockImg = document.getElementById('sootRockImage')
 const message = document.getElementById("message")
+const instruction = document.getElementById("instruction")
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -140,7 +141,11 @@ function animate() {
     console.log(progress)
 
     // message changes
-    if (progress >= 50) message.innerHTML = 'Help Chihiro find Haku!'
+    if (progress >= 50) {
+        message.innerHTML = 'Help Chihiro find Haku!'
+        instruction.innerHTML = ''
+    } 
+    if (progress < 50) instruction.innerHTML = "Use WAD keys to move"
     if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits!'
     if (progress >= 2800) message.innerHTML = 'Soot sprites are friendly...'
     if (progress >= 3200) message.innerHTML = 'but beware of No Face!'
