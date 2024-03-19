@@ -9,7 +9,7 @@ This is a relaxing adventure game inspired by *Spirited Away*, a beautiful Studi
 📸 Image: free backgrounds from the [Ghibli website](https://www.ghibli.jp/info/013251/) <br><br>
 
 Note: a reload may be necessary to render the game properly. It should look like this: 
-<img width="1430" alt="Screenshot 2024-02-18 at 11 26 29 PM" src="https://github.com/ashwu11/haku-dash/assets/134242218/cadf3430-b80e-40e2-a259-40596dd1d960">
+<img width="1440" alt="haku-dash" src="https://github.com/ashwu11/haku-dash/assets/134242218/76b329dc-90d0-44b8-81b9-aacd1c3c6df9">
 <sup> Built using JavaScript, HTML, and CSS <sup>
 
 ## Thematic features ⛩️
