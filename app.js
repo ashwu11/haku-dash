@@ -89,8 +89,8 @@ function init() {
         new Scenery({x: 820, y: 270, w: 55, h: 75, img: sootRockImg}),
     ]
     obstacles = [
-        new Obstacle({x: floorImg.width*8, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
-        new Obstacle({x: floorImg.width*12 + 250, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
+        new Obstacle({x: floorImg.width*8 - 10, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
+        new Obstacle({x: floorImg.width*12 + 275, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg}),
         new Obstacle({x: winPosition + 700, y: 180, w: 230, h: 300, img: endingImg})
     ]
 }
@@ -141,14 +141,15 @@ function animate() {
     console.log(progress)
 
     // message changes
+    if (progress < 50) instruction.innerHTML = "Use WAD keys to move"
     if (progress >= 50) {
         message.innerHTML = 'Help Chihiro find Haku!'
-        instruction.innerHTML = ''
+        instruction.innerHTML = 'Turn your volume up :)'
     } 
-    if (progress < 50) instruction.innerHTML = "Use WAD keys to move"
-    if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits!'
+    if (progress >= 800) instruction.innerHTML = ''
+    if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits'
     if (progress >= 2800) message.innerHTML = 'Soot sprites are friendly...'
-    if (progress >= 3200) message.innerHTML = 'but beware of No Face!'
+    if (progress >= 3200) message.innerHTML = 'but beware of No Face >:O'
     if (progress >= 3650) message.innerHTML = 'Phew, that was close'
     if (progress >= 4000) message.innerHTML = 'we are almost there :]'
     if (progress >= 5300) message.innerHTML = 'one more puzzle for you...'

@@ -7,7 +7,7 @@ class Player {
         this.width = 85
         this.height = 160
         this.velocity = {x: 10, y: 10}
-        this.speed = 8
+        this.speed = 7
         this.image = img
         this.frame = 2
         this.counter = 5
