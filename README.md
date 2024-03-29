@@ -2,7 +2,7 @@
 Chihiro is looking for Haku but she is a little lost... <br>
 Help her navigate through obstacles and avoid falling into pits to reach Haku! <br>
 This is a relaxing adventure game inspired by *Spirited Away*, a beautiful Studio Ghibli film directed by Hayao Miyazaki. <br>
-Built using JavaScript, HTML, and CSS.
+This project was built using JavaScript, HTML, and CSS.
 <br>
 
 👉 Try it [here](https://haku-dash.vercel.app)!<br>
