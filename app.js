@@ -146,11 +146,11 @@ function animate() {
         message.innerHTML = 'Help Chihiro find Haku!'
         instruction.innerHTML = 'Turn your volume up :)'
     } 
-    if (progress >= 800) instruction.innerHTML = ''
+    if (progress >= 800) instruction.innerHTML = '._.'
     if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits'
     if (progress >= 2800) message.innerHTML = 'Soot sprites are friendly...'
     if (progress >= 3200) message.innerHTML = 'but beware of No Face >:O'
-    if (progress >= 3650) message.innerHTML = 'Phew, that was close'
+    if (progress >= 3700) message.innerHTML = 'Phew, that was close'
     if (progress >= 4000) message.innerHTML = 'we are almost there :]'
     if (progress >= 5300) message.innerHTML = 'one more puzzle for you...'
 
