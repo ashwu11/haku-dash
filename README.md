@@ -10,7 +10,7 @@ This is a relaxing adventure game inspired by *Spirited Away*, a beautiful Studi
 ⌨️ Built Using: JavaScript, HTML, CSS <br><br>
 
 **Please note:** a reload may be necessary to render the game properly. It should look like this: 
-<img width="1440" alt="Screenshot 2024-03-28 at 7 13 01 PM" src="https://github.com/ashwu11/haku-dash/assets/134242218/ba588d0b-1b5e-4c8c-a428-d95765292862">
+<img width="1380" alt="Screenshot 2024-04-02 at 4 36 25 PM" src="https://github.com/ashwu11/haku-dash/assets/134242218/1247de2e-058c-4519-8738-dfb4f7da1b97">
 
 ## Thematic features ⛩️
 - **Chihiro**: the movable player
