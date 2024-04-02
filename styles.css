@@ -1,5 +1,15 @@
+html {
+    font-size: 5px;
+}
+
+.krona-one-regular {
+    font-family: "Krona One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
 body {
-    margin: 20px;
+    margin: 25px;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -10,17 +20,21 @@ body {
 
 h1 {
     color: beige;
+    font-size: 8rem;
+    font-family: "Krona One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #message {
     color: beige;
-    font-size: 20px;
+    font-size: 4rem;
     margin-top: 25px;
 }
 
 #instruction {
     color: rgb(197, 197, 175);
-    font-size: 15px;
+    font-size: 3rem;
     margin: 10px;
     opacity: 1;
     animation: fadeInOut 3s infinite;
@@ -36,11 +50,10 @@ h1 {
     flex-direction: row;
     align-items: center;
     margin: 20px;
-    margin-bottom: 25px;
 }
 
 .line {
-    font-size: 50px;
+    font-size: 10rem;
     height: 1px;
     background-color: beige;
     margin: 0 25px;
@@ -48,6 +61,8 @@ h1 {
 
 #myCanvas {
     border-radius: 20px;
+    width: 75%;
+    height: 70%;
 }
 
 .card {
