@@ -2,16 +2,17 @@ html {
     font-size: 5px;
 }
 
+/* 
 .krona-one-regular {
     font-family: "Krona One", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
-/* // <uniquifier>: Use a unique and descriptive class name
-// <weight>: Use a value from 400 to 800 */
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 400 to 800
 
-/* .syne-<uniquifier> {
+.syne-<uniquifier> {
   font-family: "Syne", sans-serif;
   font-optical-sizing: auto;
   font-weight: <weight>;
@@ -134,4 +135,62 @@ h1 {
     100% {
       transform: scale(1);
     }
+}
+
+@media (max-width: 1000px) {
+    h1 {
+        font-size: 6rem;
+    }
+
+    .line {
+        font-size: 6rem;
+        margin: 0 20px;
+    }
+
+    #message {
+        font-size: 4rem;
+        margin-top: 20px;
+    }
+
+    #instruction {
+        font-size: 3rem;
+        margin: 15px;
+    }
+
+    #myCanvas {
+        width: 80%;
+        height: 50%;
+    }
+}
+
+@media (max-width: 700px) {
+
+    body {
+        margin: 15px;
+    }
+
+    h1 {
+        font-size: 5rem;
+    }
+
+    .line {
+        font-size: 5rem;
+        margin: 0 15px;
+    }
+
+    #message {
+        font-size: 3rem;
+        margin-top: 15px;
+    }
+
+    #instruction {
+        font-size: 2rem;
+        margin: 10px;
+    }
+
+    #myCanvas {
+        width: 90%;
+        height: 40%;
+    }
+
 }
