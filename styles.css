@@ -1,23 +1,6 @@
 html {
-    font-size: 5px;
+    font-size: 0.35vw;
 }
-
-/* 
-.krona-one-regular {
-    font-family: "Krona One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-// <uniquifier>: Use a unique and descriptive class name
-// <weight>: Use a value from 400 to 800
-
-.syne-<uniquifier> {
-  font-family: "Syne", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: <weight>;
-  font-style: normal;
-} */
 
 body {
     margin: 25px;
@@ -37,32 +20,22 @@ h1 {
     font-style: normal;
 }
 
-#message {
-    color: beige;
-    font-size: 4rem;
-    margin-top: 25px;
-    font-family: "Syne", sans-serif;
-    font-optical-sizing: auto;
+/* 
+.krona-one-regular {
+    font-family: "Krona One", sans-serif;
     font-weight: 400;
     font-style: normal;
 }
 
-#instruction {
-    color: rgb(197, 197, 175);
-    font-size: 3rem;
-    margin: 10px;
-    opacity: 1;
-    animation: fadeInOut 3s infinite;
-    font-family: "Syne", sans-serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-}
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 400 to 800
 
-@keyframes fadeInOut {
-    0%,100% { opacity: 0.5 }
-    50% { opacity: 1 }
-}
+.syne-<uniquifier> {
+  font-family: "Syne", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+} */
 
 .title {
     display: flex;
@@ -84,9 +57,28 @@ h1 {
     height: 70%;
 }
 
+.caption {
+    font-family: "Syne", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#message {
+    color: beige;
+    font-size: 4rem;
+    margin-top: 25px;
+}
+
+#instruction {
+    color: rgb(197, 197, 175);
+    font-size: 3rem;
+    margin: 10px;
+    opacity: 1;
+    animation: fadeInOut 3s infinite;
+}
+
 .card {
-    display: flex;
-    flex-direction: row;
     height: 70px;
     width: 280px;
     margin-top: 60px;
@@ -120,10 +112,26 @@ h1 {
 }
   
 .card .github:hover {
-    animation: bounce_613 0.4s linear;
+    animation: bounce 0.4s linear;
 }
 
-@keyframes bounce_613 {
+.slideInLeft {
+    /* animation-name: slideInLeft;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-delay: 0s;
+    animation-iteration-count: 1;
+    animation-direction: normal; 
+    animation-fill-mode: none; */
+
+    animation: slideInLeft 1s ease-in;
+}
+
+.slideInRight {
+    animation: slideInRight 1s ease-in;
+}
+
+@keyframes bounce {
     40% {
       transform: scale(1.2);
     }
@@ -137,60 +145,34 @@ h1 {
     }
 }
 
-@media (max-width: 1000px) {
-    h1 {
-        font-size: 6rem;
+@keyframes fadeInOut {
+    0%,100% { opacity: 0.5 }
+    50% { opacity: 1 }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-300px);
     }
 
-    .line {
-        font-size: 6rem;
-        margin: 0 20px;
-    }
-
-    #message {
-        font-size: 4rem;
-        margin-top: 20px;
-    }
-
-    #instruction {
-        font-size: 3rem;
-        margin: 15px;
-    }
-
-    #myCanvas {
-        width: 80%;
-        height: 50%;
+    to {
+        transform: translateX(0px);
     }
 }
 
-@media (max-width: 700px) {
-
-    body {
-        margin: 15px;
+@keyframes slideInRight {
+    from {
+        transform: translateX(300px);
     }
 
-    h1 {
-        font-size: 5rem;
+    to {
+        transform: translateX(0px);
     }
+}
 
-    .line {
-        font-size: 5rem;
-        margin: 0 15px;
-    }
-
-    #message {
-        font-size: 3rem;
-        margin-top: 15px;
-    }
-
-    #instruction {
-        font-size: 2rem;
-        margin: 10px;
-    }
-
+@media (max-width: 800px) {
     #myCanvas {
-        width: 90%;
-        height: 40%;
+        width: 90vw;
+        height: 50vw;
     }
-
 }
