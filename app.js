@@ -159,7 +159,7 @@ function animate() {
         message.innerHTML = 'Yay, we found Haku!'
         console.log("You win!")
         tadaSound.play()
-        redirectToWinPage();
+        redirectToWinPage()
     } 
 
     // lose condition
@@ -228,9 +228,9 @@ function handleKeyUp(event) {
 }
 
 function redirectToWinPage() {
-    const gameContainer = document.getElementById('game');
-    gameContainer.classList.add('fadeOut');
-    setTimeout(function() {
-        window.location.href = 'win.html';
-    }, 5000); // delay in ms (2000ms = 2s)
+    const gameContainer = document.getElementById('game')
+    gameContainer.classList.add('fadeOut')
+    setTimeout(() => {
+        window.location.href = 'win.html'
+    }, 5500) 
 }

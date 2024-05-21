@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    margin: 20px;
+    margin: 25px;
     background-color: black;
     display: flex;
     flex-direction: column;
@@ -15,6 +15,14 @@ body {
 h1 {
     color: beige;
     font-size: 8rem;
+    font-family: "Krona One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2 {
+    color: beige;
+    font-size: 6rem;
     font-family: "Krona One", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -91,6 +99,19 @@ h1 {
     animation: fadeInOut 3s infinite;
 }
 
+#playAgain {
+    background-color: beige;
+    font-family: "Syne", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 5rem;
+    width: 200px;
+    height: 75px;
+    border-radius: 10px;
+    margin: 40px;
+ }
+
 .card {
     height: 70px;
     width: 280px;
@@ -145,7 +166,7 @@ h1 {
 }
 
 .fadeOut {
-    animation: fadeOut 2s ease-out 3s;
+    animation: fadeOut 2s ease-out forwards 3s;
 }
 
 @keyframes bounce {

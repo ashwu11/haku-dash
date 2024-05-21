@@ -58,6 +58,20 @@
         </a>
     </div>
 
+    <script>
+        // Check if the URL contains a query parameter indicating a win
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('win')) {
+          // Remove the 'win' query parameter from the URL
+          urlParams.delete('win');
+          const newUrl = window.location.pathname + '?' + urlParams.toString();
+          window.history.replaceState({}, document.title, newUrl);
+    
+          // Reload the game page to reset the game state
+          window.location.reload();
+        }
+      </script>
+
     <script src="app.js" type="module"></script>
 </body>
 
