@@ -63,6 +63,8 @@ h1 {
 
 #myCanvas {
     border-radius: 20px;
+    width: 100%;
+    height: 95%;
 }
 
 .caption {
@@ -142,6 +144,10 @@ h1 {
     animation: slideInRight 1s ease-in;
 }
 
+.fadeOut {
+    animation: fadeOut 2s ease-out 3s;
+}
+
 @keyframes bounce {
     40% {
       transform: scale(1.2);
@@ -181,9 +187,16 @@ h1 {
     }
 }
 
+@keyframes fadeOut {
+    0% { opacity: 1 }
+    25% { opacity: 0.75 }
+    50% { opacity: 0.5 }
+    75% { opacity: 0 }
+    100% { opacity: 0 }
+}
+
 @media (max-width: 800px) {
-    #myCanvas {
-        width: 90vw;
-        height: 50vw;
+    #game {
+        width: 100%;
     }
 }

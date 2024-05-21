@@ -229,8 +229,8 @@ function handleKeyUp(event) {
 
 function redirectToWinPage() {
     const gameContainer = document.getElementById('game');
-    gameContainer.classList.add('fade-out'); // to be made
+    gameContainer.classList.add('fadeOut');
     setTimeout(function() {
-        //window.location.href = 'win.html';
-    }, 2000); // delay in ms (2000ms = 2s) change to time animation needs to complete
+        window.location.href = 'win.html';
+    }, 5000); // delay in ms (2000ms = 2s)
 }
