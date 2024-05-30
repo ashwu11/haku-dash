@@ -46,8 +46,6 @@
         </div>
     </div>
 
-
-
     <div class="card">
         <a class="github" target="_blank" href="https://github.com/ashwu11/haku-dash">
             <svg viewBox="0 0 496 512" height="1em" fill="#fff" xmlns="http://www.w3.org/2000/svg">
@@ -59,15 +57,13 @@
     </div>
 
     <script>
-        // Check if the URL contains a query parameter indicating a win
+        // reload game on play again
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('win')) {
-          // Remove the 'win' query parameter from the URL
           urlParams.delete('win');
           const newUrl = window.location.pathname + '?' + urlParams.toString();
           window.history.replaceState({}, document.title, newUrl);
     
-          // Reload the game page to reset the game state
           window.location.reload();
         }
       </script>
