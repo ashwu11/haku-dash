@@ -143,7 +143,7 @@ function animate() {
 
     console.log(progress)
 
-    // message changes
+    // caption changes
     if (progress < 50) instruction.innerHTML = "Use WAD keys to move"
     if (progress >= 50) {
         message.innerHTML = 'Help Chihiro find Haku!'
@@ -151,9 +151,9 @@ function animate() {
     }
     if (progress >= 800) instruction.innerHTML = '._.'
     if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits'
-    if (progress >= 2800) message.innerHTML = 'Soot sprites are friendly...'
-    if (progress >= 3200) message.innerHTML = 'but beware of No Face >:O'
-    if (progress >= 3700) message.innerHTML = 'Phew, that was close'
+    if (progress >= 2800) message.innerHTML = 'soot sprites are friendly...'
+    if (progress >= 3200) message.innerHTML = 'but beware of No Face :<'
+    if (progress >= 3700) message.innerHTML = 'phew, that was close'
     if (progress >= 4000) message.innerHTML = 'we are almost there :]'
     if (progress >= 5300) message.innerHTML = 'one more puzzle for you...'
 
