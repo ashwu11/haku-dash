@@ -3,6 +3,7 @@ import Player from "./classes/Player.js"
 import Scenery from "./classes/Scenery.js"
 import Obstacle from "./classes/Obstacle.js"
 
+// Audio
 const audio = document.getElementById('mainAudio')
 const walkSound = document.getElementById('walkingAudio')
 const jumpSound = document.getElementById('jumpAudio')
@@ -10,6 +11,7 @@ const windSound = document.getElementById('windAudio')
 const thumpSound = document.getElementById('thumpAudio')
 const tadaSound = document.getElementById('tadaAudio')
 
+// Images
 const backgroundImg = document.getElementById('backgroundImage')
 const woodImg = document.getElementById('woodImage')
 const floorImg = document.getElementById('floorImage')
@@ -18,42 +20,49 @@ const playerImg = document.getElementById('chihiroImage')
 const endingImg = document.getElementById('hakuImage')
 const sootRockImg = document.getElementById('sootRockImage')
 
+// Game elements
+const gameContainer = document.getElementById('game')
 const message = document.getElementById("message")
 const instruction = document.getElementById("instruction")
 const overlayScreen = document.getElementById("overlayScreen")
 const playAgainButton = document.getElementById("playAgain")
-const gameContainer = document.getElementById('game')
 
+// Canvas setup
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
+
+// Constants
 const winPosition = 6600
 const gravity = 0.6
 const jumpSpeed = 11
 const keys = { right: false, left: false }
 
+// Variables
 let progress = 0
 let player = new Player(gravity, playerImg, keys)
 let platforms = []
 let sceneryObjects = []
 let obstacles = []
 
-audio.volume = 0.3
-jumpSound.volume = 0.3
-walkSound.volume = 0.6
-windSound.volume = 0.3
-thumpSound.volume = 0.3
-tadaSound.volume = 0.1
-
-init()
+// Game
+setAudioVolume()
+startGame()
 animate()
 addEventListener('keydown', handleKeyDown)
 addEventListener('keyup', handleKeyUp)
 
+playAgainButton.addEventListener('click', () => {
+    console.log('Play again button clicked')
+    startGame()
+    gameContainer.classList.remove('fadeOut')
+    hideOverlayScreen()
+})
+
 // *** FUNCTIONS ***
 // initialize a new game
-function init() {
+function startGame() {
     audio.play()
     walkSound.play()
     progress = 0
@@ -163,7 +172,6 @@ function animate() {
         message.innerHTML = 'Yay, we found Haku!'
         console.log("You win!")
         tadaSound.play()
-        // redirectToWinPage()
         showWinScreen()
     }
 
@@ -172,7 +180,7 @@ function animate() {
         console.log("You lose... womp womp")
         message.innerHTML = 'ahhh... try again :]'
         windSound.play()
-        init()
+        startGame()
     }
 
     // obstacle collision detection
@@ -183,17 +191,17 @@ function animate() {
             console.log("You lose... womp womp")
             message.innerHTML = 'ouch... try again :]'
             thumpSound.play()
-            init()
+            startGame()
             // document.getElementById('chihiroImage').classList.add('fadeOut')
             // setTimeout(() => {
-            //     init()
+            //     startGame()
             // }, 3000)
             // I think the image doesn't actually disappear, is being overwritten so it lags
         }
     })
 }
 
-// handle key events
+// handle user key events
 function handleKeyDown(event) {
     var key = event.key.toLowerCase()
     switch (key) {
@@ -221,6 +229,7 @@ function handleKeyDown(event) {
     }
 }
 
+// handle user key events
 function handleKeyUp(event) {
     var key = event.key.toLowerCase()
 
@@ -237,36 +246,33 @@ function handleKeyUp(event) {
     console.log(keys.right)
 }
 
-function redirectToWinPage() {
-    const gameContainer = document.getElementById('game')
-    gameContainer.classList.add('fadeOut')
-    setTimeout(() => {
-        gameContainer.classList.remove('fadeOut')
-        window.location.href = 'win.html'
-    }, 5500)
-}
-
+// helper that shows overlay screen
 function showOverlayScreen() {
     console.log('showing overlay screen')
     overlayScreen.classList.add('show')
 }
 
+// helper that hides overlay screen
 function hideOverlayScreen() {
     console.log('hiding overlay screen')
     overlayScreen.classList.remove('show')
 }
 
-playAgainButton.addEventListener('click', () => {
-    console.log('Play again button clicked')
-    init()
-    gameContainer.classList.remove('fadeOut')
-    hideOverlayScreen()
-})
-
+// helper that shows win screen
 function showWinScreen() {
     console.log('Showing win screen')
     gameContainer.classList.add('fadeOut')
     setTimeout(() => {
         showOverlayScreen()
     }, 2500)
+}
+
+// set up audio volume 
+function setAudioVolume() {
+    audio.volume = 0.3
+    jumpSound.volume = 0.3
+    walkSound.volume = 0.6
+    windSound.volume = 0.3
+    thumpSound.volume = 0.3
+    tadaSound.volume = 0.1
 }
