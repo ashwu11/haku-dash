@@ -188,7 +188,7 @@ h2 {
 }
 
 .fadeOut {
-    animation: fadeOut 2s ease-out forwards 3s;
+    animation: fadeOut 1s ease-out forwards 3s;
 }
 
 .fadeIn {

@@ -22,6 +22,7 @@ const message = document.getElementById("message")
 const instruction = document.getElementById("instruction")
 const overlayScreen = document.getElementById("overlayScreen")
 const playAgainButton = document.getElementById("playAgain")
+const gameContainer = document.getElementById('game')
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -162,7 +163,8 @@ function animate() {
         message.innerHTML = 'Yay, we found Haku!'
         console.log("You win!")
         tadaSound.play()
-        redirectToWinPage()
+        // redirectToWinPage()
+        showWinScreen()
     }
 
     // lose condition
@@ -245,14 +247,26 @@ function redirectToWinPage() {
 }
 
 function showOverlayScreen() {
+    console.log('showing overlay screen')
     overlayScreen.classList.add('show')
 }
 
 function hideOverlayScreen() {
+    console.log('hiding overlay screen')
     overlayScreen.classList.remove('show')
 }
 
 playAgainButton.addEventListener('click', () => {
+    console.log('Play again button clicked')
     init()
+    gameContainer.classList.remove('fadeOut')
     hideOverlayScreen()
 })
+
+function showWinScreen() {
+    console.log('Showing win screen')
+    gameContainer.classList.add('fadeOut')
+    setTimeout(() => {
+        showOverlayScreen()
+    }, 4000)
+}
