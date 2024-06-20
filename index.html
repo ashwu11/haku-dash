@@ -30,13 +30,14 @@
     <audio id="thumpAudio" src="./audio/thump.mp3"></audio>
     <audio id="tadaAudio" src="./audio/tada.mp3"></audio>
 
-
+    <!-- Header -->
     <div class="title slideInLeft">
         <div class="line">_________</div>
         <h1>Haku Dash</h1>
         <div class="line">_________</div>
     </div>
 
+    <!-- Game -->
     <div id="game">
         <canvas id="myCanvas"></canvas>
 
@@ -46,6 +47,7 @@
         </div>
     </div>
 
+    <!-- footer -->
     <div class="card">
         <a class="github" target="_blank" href="https://github.com/ashwu11/haku-dash">
             <svg viewBox="0 0 496 512" height="1em" fill="#fff" xmlns="http://www.w3.org/2000/svg">
@@ -56,8 +58,17 @@
         </a>
     </div>
 
+    <!-- Overlay screen -->
+     <div id="overlayScreen" class="overlay"> 
+        <div class="overlayContent">
+            <h1>Congratulations!</h1>
+            <h2>You Win 🎉</h2>
+            <button id="playAgain">Play Again</button>
+        </div>
+     </div>
+
+    <!-- reload game on play again -->
     <script>
-        // reload game on play again
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('win')) {
           urlParams.delete('win');

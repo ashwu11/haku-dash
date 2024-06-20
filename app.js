@@ -17,8 +17,11 @@ const nofaceImg = document.getElementById('nofaceImage')
 const playerImg = document.getElementById('chihiroImage')
 const endingImg = document.getElementById('hakuImage')
 const sootRockImg = document.getElementById('sootRockImage')
+
 const message = document.getElementById("message")
 const instruction = document.getElementById("instruction")
+const overlayScreen = document.getElementById("overlayScreen")
+const playAgainButton = document.getElementById("playAgain")
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -47,7 +50,7 @@ animate()
 addEventListener('keydown', handleKeyDown)
 addEventListener('keyup', handleKeyUp)
 
-// FUNCTIONS
+// *** FUNCTIONS ***
 // initialize a new game
 function init() {
     audio.play()
@@ -183,6 +186,7 @@ function animate() {
             // setTimeout(() => {
             //     init()
             // }, 3000)
+            // I think the image doesn't actually disappear, is being overwritten so it lags
         }
     })
 }
@@ -239,3 +243,16 @@ function redirectToWinPage() {
         window.location.href = 'win.html'
     }, 5500)
 }
+
+function showOverlayScreen() {
+    overlayScreen.classList.add('show')
+}
+
+function hideOverlayScreen() {
+    overlayScreen.classList.remove('show')
+}
+
+playAgainButton.addEventListener('click', () => {
+    init()
+    hideOverlayScreen()
+})
