@@ -268,5 +268,5 @@ function showWinScreen() {
     gameContainer.classList.add('fadeOut')
     setTimeout(() => {
         showOverlayScreen()
-    }, 4000)
+    }, 2500)
 }
