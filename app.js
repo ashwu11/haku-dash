@@ -141,6 +141,7 @@ function animate() {
     platforms.forEach((platform) => { platform.draw() });
     obstacles.forEach((obstacle) => { obstacle.draw() });
     player.update();
+    console.log(progress);
 
     // player movement
     if (keys.left && player.position.x > 50) {
@@ -164,8 +165,7 @@ function animate() {
     }
 
     // walking sound 
-    const isWalking = keys.left || keys.right;
-    if (isWalking) {
+    if (keys.left || keys.right) {
         if (audio.walk.paused) audio.walk.play();
     } else {
         if (!audio.walk.paused) audio.walk.pause();
@@ -180,8 +180,6 @@ function animate() {
             player.velocity.y = 0;
         }
     })
-
-    console.log(progress);
 
     // caption changes
     let currentStep = captions.findLast(step => progress >= step.threshold);
@@ -224,12 +222,10 @@ function handleKeyDown(event) {
     var key = event.key.toLowerCase();
     switch (key) {
         case 'a':
-            console.log('left');
             keys.left = true;
             break;
 
         case 'w':
-            console.log('up');
             if (player.velocity.y == 0) {
                 player.velocity.y -= jumpSpeed;
                 audio.jump.play();
@@ -237,7 +233,6 @@ function handleKeyDown(event) {
             break;
 
         case 'd':
-            console.log('right');
             keys.right = true;
             break;
 
@@ -258,7 +253,6 @@ function handleKeyUp(event) {
             break;
 
     }
-    console.log(keys.right);
 }
 
 // helper that shows overlay screen
