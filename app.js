@@ -35,9 +35,20 @@ canvas.height = 576;
 
 // Constants
 const winPosition = 6600;
-const gravity = 0.98;
-const jumpSpeed = 11;
+const gravity = 0.88;
+const jumpSpeed = 13;
 const keys = { right: false, left: false };
+const captionSteps = [
+    { threshold: 0, instruction: 'Use WAD keys to move' },
+    { threshold: 50, instruction: 'Turn your volume up :)', message: 'Help Chihiro find Haku!' },
+    { threshold: 800, instruction: '._.' },
+    { threshold: 1000, message: 'Tip: use wooden logs to avoid pits' },
+    { threshold: 2800, message: 'soot sprites are friendly...' },
+    { threshold: 3200, message: 'but beware of No Face :<' },
+    { threshold: 3700, message: 'phew, that was close' },
+    { threshold: 4000, message: 'we are almost there :]' },
+    { threshold: 5300, message: 'one more puzzle for you...' },
+];
 
 // Variables
 let progress = 0;
@@ -58,9 +69,13 @@ addEventListener('keyup', handleKeyUp);
 
 playAgainButton.addEventListener('click', () => {
     console.log('Play again button clicked');
-    startGame();
-    gameContainer.classList.remove('fadeOut');
     hideOverlayScreen();
+    startGame();
+
+    setTimeout(() => {
+        gameContainer.classList.remove('fadeOut');
+    }, 1000);
+    
 })
 
 // *** FUNCTIONS ***
@@ -107,7 +122,7 @@ function startGame() {
     ];
     obstacles = [
         new Obstacle({ x: floorImg.width * 8 - 10, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg }),
-        new Obstacle({ x: floorImg.width * 12 + 275, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg }),
+        new Obstacle({ x: floorImg.width * 12 + 270, y: 345, w: nofaceImg.width, h: nofaceImg.height, img: nofaceImg }),
         new Obstacle({ x: winPosition + 700, y: 180, w: 230, h: 300, img: endingImg })
     ];
 }
@@ -158,18 +173,11 @@ function animate() {
     console.log(progress);
 
     // caption changes
-    if (progress < 50) instruction.innerHTML = "Use WAD keys to move";
-    if (progress >= 50) {
-        message.innerHTML = 'Help Chihiro find Haku!';
-        instruction.innerHTML = 'Turn your volume up :)';
+    let currentStep = captionSteps.findLast(step => progress >= step.threshold);
+    if (currentStep) {
+        if (currentStep.message) message.innerHTML = currentStep.message;
+        if (currentStep.instruction) instruction.innerHTML = currentStep.instruction;
     }
-    if (progress >= 800) instruction.innerHTML = '._.';
-    if (progress >= 1000) message.innerHTML = 'Tip: use wooden logs to avoid pits';
-    if (progress >= 2800) message.innerHTML = 'soot sprites are friendly...';
-    if (progress >= 3200) message.innerHTML = 'but beware of No Face :<';
-    if (progress >= 3700) message.innerHTML = 'phew, that was close';
-    if (progress >= 4000) message.innerHTML = 'we are almost there :]';
-    if (progress >= 5300) message.innerHTML = 'one more puzzle for you...';
 
     // win condition
     if (progress > winPosition) {
@@ -205,7 +213,7 @@ function animate() {
     })
 }
 
-// handle user key events
+// handle user key down event
 function handleKeyDown(event) {
     var key = event.key.toLowerCase();
     switch (key) {
@@ -233,7 +241,7 @@ function handleKeyDown(event) {
     }
 }
 
-// handle user key events
+// handle user key up event
 function handleKeyUp(event) {
     var key = event.key.toLowerCase();
 
