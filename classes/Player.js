@@ -13,12 +13,28 @@ class Player {
         this.counter = 5;
         this.gravity = g;
         this.keys = keys;
+        this.facing === "right";
     }
 
     draw() {
-        c.drawImage(this.image, 69.5 * this.frame, 0, 70, 170,
-            this.position.x, this.position.y,
-            this.width, this.height);
+        c.save();
+
+        const flipped = this.facing === "left";
+        const drawX = flipped ? -this.position.x - this.width : this.position.x;
+
+        if (flipped) {
+            c.scale(-1, 1);
+        }
+
+        c.drawImage(
+            this.image,
+            69.5 * this.frame, 0,   
+            70, 170,                
+            drawX, this.position.y, 
+            this.width, this.height 
+        );
+
+        c.restore();
     }
 
     update() {
@@ -26,14 +42,17 @@ class Player {
         if (this.counter > 0){
             this.counter--;
         } else if (this.keys.right) {
+            this.facing = "right";
             this.frame++;
             if (this.frame > 7) this.frame = 0;
             this.counter = 5;
         } else if (this.keys.left) {
+            this.facing = "left";
             this.frame--;
             if (this.frame < 1) this.frame = 7;
             this.counter = 5;
         }
+
 
         // speed
         this.draw();

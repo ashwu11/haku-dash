@@ -98,7 +98,7 @@ function startGame() {
         new Platform({ x: floorImg.width * 5 + 310, y: 300, w: 150, h: 50, img: woodImg }),
         new Platform({ x: floorImg.width * 5 + 500, y: 400, w: 150, h: 50, img: woodImg }),
         new Platform({ x: floorImg.width * 6 + 200, y: 500, w: 500, h: 100, img: floorImg }),
-        // soots and No Face
+        // soot sprites and No Face
         new Platform({ x: floorImg.width * 7 + 200, y: 500, w: 500, h: 100, img: floorImg }),
         new Platform({ x: floorImg.width * 7 + 300, y: 425, w: 55, h: 75, img: sootRockImg }),
         new Platform({ x: floorImg.width * 8 + 200, y: 500, w: 500, h: 100, img: floorImg }),
