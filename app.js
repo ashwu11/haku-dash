@@ -3,26 +3,23 @@ import Player from "./classes/Player.js";
 import Scenery from "./classes/Scenery.js";
 import Obstacle from "./classes/Obstacle.js";
 
-// Sounds
-const audio = {
-    main: document.getElementById('mainAudio'),
-    walk: document.getElementById('walkingAudio'),
-    jump: document.getElementById('jumpAudio'),
-    wind: document.getElementById('windAudio'),
-    thump: document.getElementById('thumpAudio'),
-    tada: document.getElementById('tadaAudio')
-};
-
-// Images
-const images = {
-    background: document.getElementById('backgroundImage'),
-    wood: document.getElementById('woodImage'),
-    floor: document.getElementById('floorImage'),
-    noFace: document.getElementById('nofaceImage'),
-    player: document.getElementById('chihiroImage'),
-    ending: document.getElementById('hakuImage'),
-    soot: document.getElementById('sootRockImage')
+function getElementsByIdMap(ids) {
+    return ids.reduce((map, id) => {
+        const el = document.getElementById(id);
+        if (!el) console.warn(`Missing element with id "${id}"`);
+        map[id] = el;
+        return map;
+    }, {});
 }
+
+const audio = getElementsByIdMap([
+    'mainAudio', 'walkingAudio', 'jumpAudio', 'windAudio', 'thumpAudio', 'tadaAudio'
+]);
+
+const images = getElementsByIdMap([
+    'backgroundImage', 'woodImage', 'floorImage', 'nofaceImage',
+    'chihiroImage', 'hakuImage', 'sootRockImage', 'starsImage'
+]);
 
 // Game elements
 const gameContainer = document.getElementById('game');
@@ -42,6 +39,7 @@ const winPosition = 6600;
 const gravity = 0.88;
 const jumpSpeed = 13;
 const keys = { right: false, left: false };
+const stars = [];
 const captions = [
     { threshold: 0, instruction: 'Use WAD keys to move' },
     { threshold: 50, instruction: 'Turn your volume up :)', message: 'Help Chihiro find Haku!' },
@@ -61,28 +59,27 @@ let platforms = [];
 let sceneryObjects = [];
 let obstacles = [];
 
-// Game
+// Start Game
 document.addEventListener("DOMContentLoaded", () => { 
+    setAudioVolume();
+    addEventListeners();
     startGame();
     animate();
-})
+});
 
-setAudioVolume();
-addEventListener('keydown', handleKeyDown);
-addEventListener('keyup', handleKeyUp);
-
-playAgainButton.addEventListener('click', () => {
-    console.log('Play again button clicked');
-    hideOverlayScreen();
-    startGame();
-
-    setTimeout(() => {
-        gameContainer.classList.remove('fadeOut');
-    }, 1000);
-    
-})
 
 // *** FUNCTIONS ***
+
+function addEventListeners() {
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    playAgainButton.addEventListener('click', () => {
+        console.log('Play again button clicked');
+        hideOverlayScreen();
+        startGame();
+        setTimeout(() => gameContainer.classList.remove('fadeOut'), 1000);
+    });
+}
 
 // initialize a new game
 function startGame() {
