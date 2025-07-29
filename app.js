@@ -128,6 +128,10 @@ function startGame() {
         new Obstacle({ x: images.floor.width * 12 + 270, y: 345, w: images.noFace.width, h: images.noFace.height, img: images.noFace }),
         new Obstacle({ x: winPosition + 700, y: 180, w: 230, h: 300, img: images.ending })
     ];
+    // TODO
+    // setTimeout(() => {
+    //     startSpawningStars();
+    // }, 10000);
 }
 
 // handle game animation

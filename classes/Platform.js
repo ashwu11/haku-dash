@@ -1,5 +1,5 @@
 const canvas = document.querySelector('canvas');
-const c = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
 class Platform {
     constructor({x, y, w, h, img}) {
@@ -10,7 +10,7 @@ class Platform {
     }
 
     draw() {
-        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
+        ctx.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
     }
 }
 

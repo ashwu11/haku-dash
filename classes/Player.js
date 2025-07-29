@@ -1,5 +1,5 @@
 const canvas = document.querySelector('canvas');
-const c = canvas.getContext('2d');
+const ctx = canvas.getContext('2d');
 
 class Player {
     constructor(g, img, keys) {
@@ -17,16 +17,16 @@ class Player {
     }
 
     draw() {
-        c.save();
+        ctx.save();
 
         const flipped = this.facing === "left";
         const drawX = flipped ? -this.position.x - this.width : this.position.x;
 
         if (flipped) {
-            c.scale(-1, 1);
+            ctx.scale(-1, 1);
         }
 
-        c.drawImage(
+        ctx.drawImage(
             this.image,
             69.5 * this.frame, 0,   
             70, 170,                
@@ -34,7 +34,7 @@ class Player {
             this.width, this.height 
         );
 
-        c.restore();
+        ctx.restore();
     }
 
     update() {
