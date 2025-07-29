@@ -9,11 +9,6 @@ const spawnArea = {
     yMax: 500
 };
 
-const intervalRange = {
-    min: 2000,
-    max: 8000
-};
-
 function getRandomPosition() {
     return {
         x: Math.random() * (spawnArea.xMax - spawnArea.xMin) + spawnArea.xMin,
@@ -22,18 +17,26 @@ function getRandomPosition() {
 }
 
 class Star {
+    static image = null;
+    static frameSize = 32;
+    static frameCount = 4;
+
     constructor() {
         this.image = starsImage;
         this.position = getRandomPosition();
-        this.colour = Math.floor(Math.random() * 4);
+        this.size = 30;
+        this.frame = Math.floor(Math.random() * Star.frameCount);
     }
 
     draw() {
-        ctx.drawImage(this.image, this.position.x, this.position.y);
+        if (!Star.image) return;
+
+        ctx.drawImage(Star.image, 0, this.frame * Star.frameSize, 
+            this.position.x - this.size / 2, this.position.y - this.size / 2);
     }
 
     // spawns stars in game
-    startSpawningStars() {
+    spawnStarsLoop() {
         // TODO
     }
 

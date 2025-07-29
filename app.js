@@ -2,33 +2,38 @@ import Platform from "./classes/Platform.js";
 import Player from "./classes/Player.js";
 import Scenery from "./classes/Scenery.js";
 import Obstacle from "./classes/Obstacle.js";
+import Star from "./classes/Star.js";
 
-function getElementsByIdMap(ids) {
-    return ids.reduce((map, id) => {
-        const el = document.getElementById(id);
-        if (!el) console.warn(`Missing element with id "${id}"`);
-        map[id] = el;
-        return map;
-    }, {});
+// Sounds
+const audio = {
+    main: document.getElementById('mainAudio'),
+    walk: document.getElementById('walkingAudio'),
+    jump: document.getElementById('jumpAudio'),
+    wind: document.getElementById('windAudio'),
+    thump: document.getElementById('thumpAudio'),
+    tada: document.getElementById('tadaAudio')
+};
+
+// Images
+const images = {
+    background: document.getElementById('backgroundImage'),
+    wood: document.getElementById('woodImage'),
+    floor: document.getElementById('floorImage'),
+    noFace: document.getElementById('nofaceImage'),
+    player: document.getElementById('chihiroImage'),
+    ending: document.getElementById('hakuImage'),
+    soot: document.getElementById('sootRockImage'),
+    stars: document.getElementById('starsImage')
 }
 
-const audio = getElementsByIdMap([
-    'mainAudio', 'walkingAudio', 'jumpAudio', 'windAudio', 'thumpAudio', 'tadaAudio'
-]);
-
-const images = getElementsByIdMap([
-    'backgroundImage', 'woodImage', 'floorImage', 'nofaceImage',
-    'chihiroImage', 'hakuImage', 'sootRockImage', 'starsImage'
-]);
-
-// Game elements
+// Game Elements
 const gameContainer = document.getElementById('game');
 const message = document.getElementById("message");
 const instruction = document.getElementById("instruction");
 const overlayScreen = document.getElementById("overlayScreen");
 const playAgainButton = document.getElementById("playAgain");
 
-// Canvas setup
+// Canvas Setup
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 canvas.width = 1024;
@@ -52,7 +57,7 @@ const captions = [
     { threshold: 5300, message: 'one more puzzle for you...' },
 ];
 
-// Variables
+// Game Variables
 let progress = 0;
 let player = new Player(gravity, images.player, keys);
 let platforms = [];
@@ -63,23 +68,12 @@ let obstacles = [];
 document.addEventListener("DOMContentLoaded", () => { 
     setAudioVolume();
     addEventListeners();
+    loadImages();
     startGame();
     animate();
 });
 
-
 // *** FUNCTIONS ***
-
-function addEventListeners() {
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('keyup', handleKeyUp);
-    playAgainButton.addEventListener('click', () => {
-        console.log('Play again button clicked');
-        hideOverlayScreen();
-        startGame();
-        setTimeout(() => gameContainer.classList.remove('fadeOut'), 1000);
-    });
-}
 
 // initialize a new game
 function startGame() {
@@ -277,7 +271,9 @@ function showWinScreen() {
     }, 2500);
 }
 
-// set up audio volume 
+
+// Game Setup Helpers
+
 function setAudioVolume() {
     audio.main.volume = 0.3;
     audio.jump.volume = 0.3;
@@ -285,4 +281,19 @@ function setAudioVolume() {
     audio.wind.volume = 0.3;
     audio.thump.volume = 0.3;
     audio.tada.volume = 0.1;
+}
+
+function addEventListeners() {
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    playAgainButton.addEventListener('click', () => {
+        console.log('Play again button clicked');
+        hideOverlayScreen();
+        startGame();
+        setTimeout(() => gameContainer.classList.remove('fadeOut'), 1000);
+    });
+}
+
+function loadImages() {
+    images.stars.onload = () => Star.image = images.stars;
 }
