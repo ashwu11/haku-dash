@@ -41,7 +41,7 @@ canvas.height = 576;
 
 // Constants
 const winPosition = 6600;
-const gravity = 0.88;
+const gravity = 0.85;
 const jumpSpeed = 13;
 const keys = { right: false, left: false };
 const stars = [];
@@ -115,7 +115,7 @@ function startGame() {
         new Scenery({ x: 820, y: 270, w: 55, h: 75, img: images.soot }),
     ];
     obstacles = [
-        new Obstacle({ x: images.floor.width * 8 - 10, y: 345, w: images.noFace.width, h: images.noFace.height, img: images.noFace }),
+        new Obstacle({ x: images.floor.width * 8 - 25, y: 345, w: images.noFace.width, h: images.noFace.height, img: images.noFace }),
         new Obstacle({ x: images.floor.width * 12 + 270, y: 345, w: images.noFace.width, h: images.noFace.height, img: images.noFace }),
         new Obstacle({ x: winPosition + 700, y: 180, w: 230, h: 300, img: images.ending })
     ];
